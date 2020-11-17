@@ -1,3 +1,3 @@
 # Vis_Final-Project
-Visualization Final Project \n
+Visualization Final Project  
 by Team 8
