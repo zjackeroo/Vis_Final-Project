@@ -1,3 +1,4 @@
 # Vis_Final-Project
 Visualization Final Project  
-by Team 8
+"Syrian Refugee Crisis"
+by Team 8  
