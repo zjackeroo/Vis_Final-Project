@@ -23,6 +23,17 @@
 
     <!-- Your code -->
     <script defer src="./js/script.js" delay></script>
+
+    <!-- Vega Lite -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.17.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.17.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.12.2"></script>
+    <style media="screen">
+      /* Add space between Vega-Embed links  */
+      .vega-actions a {
+        margin-right: 5px;
+      }
+    </style>
     
   </head>
   <body>
@@ -39,7 +50,7 @@
       <h3>
         World Refugee Data
       </h3>
-      <div class="line1">line chart</div>
+      <div id="line1"></div>
       <div class="pie1">pie chart</div>
     </div>
     <div class="container">
@@ -56,5 +67,77 @@
       <div class="map3">map</div>
       <div class="line3">timeline</div>
     </div>
+
+    <script>
+      var line1 = {
+        "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+        "vconcat": [{
+            "data": {
+            //   "url":"https://api.covidtracking.com/v1/states/current.csv"
+                "url":"./data/refugee.csv"
+            },
+            "transform": [{
+                "filter": "datum.Total >= 1000000"
+            }],
+            "width": 720,
+            "height": 480,
+            // "height": {"step": 1},
+            // "mark": "line",
+            "encoding": {
+                "x": {"field": "Year", "type": "temporal", "title": "Year"},
+                "y": {"field": "Total", "type": "quantitative", "title": "Total Refugee Population"},
+                // "color": {"field": "Country of origin", "type": "nominal"},
+                "color": {
+                    "condition": {
+                        "selection": "hover",
+                        "field": "Country of origin",
+                        "type": "nominal",
+                        "legend": null
+                    },
+                    "value": "grey"
+                },
+                "opacity": {
+                    "condition": {
+                        "selection": "hover",
+                        "value": 1
+                    },
+                    "value": 0.2
+                },
+                // "tooltip": {"field": "Total", "type": "quantitative"},
+            },
+            "layer": [
+                {
+                    "selection": {
+                    "hover": {
+                        "type": "single",
+                        "on": "mouseover",
+                        "empty": "all",
+                        "fields": ["Country of origin"],
+                        "init": {"Country of origin": "Syrian Arab Rep."}
+                    }
+                    },
+                    "mark": {"type": "line", "strokeWidth": 10, "stroke": "transparent", "point": {"filled": false, "fill": "white", "size": 50}}
+                }, 
+                {"mark": "line"}, 
+                {
+                    "encoding": {
+                    "x": {"aggregate": "max", "field": "Year"},
+                    "y": {"aggregate": {"argmax": "Year"}, "field": "Total"}
+                    },
+                    "layer": [
+                        // {"mark": {"type": "circle", "filled": false}}, 
+                        {
+                            "mark": {"type": "text", "align": "left", "dx": 10, "fontSize": 12},
+                            "encoding": {"text": {"field":"Country of origin", "type": "nominal"}}
+                        }
+                    ]
+                }
+            ],
+            "config": {"view": {"stroke": null}},
+            "selection": {"brush": {"type": "interval"}}
+        }]
+      }
+      vegaEmbed('#line1', line1);
+    </script>
   </body>
 </html>
