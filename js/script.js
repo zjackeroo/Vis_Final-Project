@@ -99,7 +99,8 @@ var bar2 = {
         },
         "y":{
             "aggregate":"count",
-            "type":"quantitative"
+            "type":"quantitative",
+            "title": "Number of Casualties"
         },
         "color":{
             "field":"status",
