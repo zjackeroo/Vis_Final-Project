@@ -67,6 +67,9 @@ var line1 = {
     }]
 }
 
+
+
+
 var bar2 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
     "data": {
@@ -128,6 +131,7 @@ var bar2 = {
           }
     }
 }
+
 
 var line3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
