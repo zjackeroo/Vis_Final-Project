@@ -144,13 +144,41 @@ var pie2 = {
     },
     "width": 480,
     "height": 360,
-    "mark": {"type": "arc", "innerRadius": 50},
+    "selection": {
+        "highlight": {"type": "single", "empty": "none", "on": "mouseover"},
+        "select": {"type": "multi"}
+    },
+    "mark": {
+        "type": "arc",
+        "innerRadius": 40,
+        "stroke": "black",
+        "cursor": "pointer",
+        "tooltip": true
+    },
     "encoding": {
         "theta": {"aggregate":"count","type":"quantitative"},
-        "color":{"field":"gender","type":"nominal"}
-  },
-  "view": {"stroke": null}
-
+        "color":{"field":"gender","type":"nominal"},
+        "fillOpacity": {
+            "condition": {"selection": "select", "value": 1},
+            "value": 0.3
+        },
+        "strokeWidth": {
+            "condition": [
+              {
+                "test": {
+                  "and": [
+                    {"selection": "select"},
+                    "length(data(\"select_store\"))"
+                  ]
+                },
+                "value": 2
+              },
+              {"selection": "highlight", "value": 1}
+            ],
+            "value": 0
+          }
+    },
+    "view": {"stroke": null}
 
 }
 
