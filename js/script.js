@@ -108,8 +108,8 @@ var bar2 = {
             "scale":{
                 "domain": ["Civilian","Non-Civilian"],
                 "range": [ "#89cff0","#9370DB"]
-            },
-            "title": "Status of the casualities"
+        },
+        "title": "Status of the casualities"
         },
         "fillOpacity": {
             "condition": {"selection": "select", "value": 1},
