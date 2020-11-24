@@ -191,9 +191,9 @@ var line3 = {
             "url":"./data/unemployment.csv"
         },
         "transform": [{
-            "filter": "datum.TIME >= 2010",
-            "filter": "datum.SUBJECT == 'TOT'",
-            "filter": "datum.LOCATION == 'TUR'",
+            // "filter": {"field": "TIME", "gt": "2010"},
+            "filter": {"field": "LOCATION", "equal": "TUR"},
+            // "filter": {"field": "SUBJECT", "equal": "TOT"},
         }],
         "width": 480,
         "height": 480,
@@ -219,7 +219,7 @@ var line3 = {
                 },
                 "value": 0.2
             },
-            "tooltip": {"field": "Value", "type": "quantitative"},
+            // "tooltip": {"field": "Value", "type": "quantitative"},
         },
         "layer": [
             {
