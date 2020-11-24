@@ -4,6 +4,8 @@ var bar2 = {
         //   "url":"https://data.world/polymathic/casualties-of-the-syrian-civil-war 
         "url":"./data/demographics.csv"
     },
+    "width": 480,
+    "height": 360,
     "mark":"bar",
     "encoding":{
         "x":{
