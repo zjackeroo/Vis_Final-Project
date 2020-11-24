@@ -140,64 +140,66 @@ var line3 = {
             "url":"./data/unemployment.csv"
         },
         "transform": [{
-            "filter": "datum.Time >= 2010"
+            "filter": "datum.TIME >= 2010",
+            "filter": "datum.SUBJECT == 'TOT'",
+            "filter": "datum.LOCATION == 'TUR'",
         }],
         "width": 480,
         "height": 180,
         // "height": {"step": 1},
-        // "mark": "line",
+        "mark": "line",
         "encoding": {
             "x": {"field": "TIME", "type": "nominal", "title": "Year"},
             "y": {"field": "Value", "type": "quantitative", "title": "Unemployment Rate"},
-            // "color": {"field": "Country of origin", "type": "nominal"},
-            "color": {
-                "condition": {
-                    "selection": "hover",
-                    "field": "LOCATION",
-                    "type": "nominal",
-                    "legend": null
-                },
-                "value": "grey"
-            },
-            "opacity": {
-                "condition": {
-                    "selection": "hover",
-                    "value": 1
-                },
-                "value": 0.2
-            },
+            "color": {"field": "LOCATION", "type": "nominal"},
+            // "color": {
+            //     "condition": {
+            //         "selection": "hover",
+            //         "field": "LOCATION",
+            //         "type": "nominal",
+            //         "legend": null
+            //     },
+            //     "value": "grey"
+            // },
+            // "opacity": {
+            //     "condition": {
+            //         "selection": "hover",
+            //         "value": 1
+            //     },
+            //     "value": 0.2
+            // },
             // "tooltip": {"field": "Total", "type": "quantitative"},
         },
-        "layer": [
-            {
-                "selection": {
-                "hover": {
-                    "type": "single",
-                    "on": "mouseover",
-                    "empty": "all",
-                    "fields": ["LOCATION"],
-                    "init": {"LOCATION": "TUR"}
-                }
-                },
-                "mark": {"type": "line", "strokeWidth": 10, "stroke": "transparent", "point": {"filled": false, "fill": "white", "size": 50}}
-            }, 
-            {"mark": "line"}, 
-            {
-                "encoding": {
-                "x": {"aggregate": "max", "field": "TIME"},
-                "y": {"aggregate": {"argmax": "TIME"}, "field": "Value"}
-                },
-                "layer": [
-                    // {"mark": {"type": "circle", "filled": false}}, 
-                    {
-                        "mark": {"type": "text", "align": "left", "dx": 10, "fontSize": 12},
-                        "encoding": {"text": {"field":"LOCATION", "type": "nominal"}}
-                    }
-                ]
-            }
-        ],
-        "config": {"view": {"stroke": null}},
-        "selection": {"brush": {"type": "interval"}}
+        // "layer": [
+        //     {
+        //         "selection": {
+        //         "hover": {
+        //             "type": "single",
+        //             "on": "mouseover",
+        //             "empty": "all",
+        //             "fields": ["LOCATION"],
+        //             "init": {"LOCATION": "TUR"}
+        //         }
+        //         },
+        //         "mark": {"type": "line", "strokeWidth": 10, "stroke": "transparent", "point": {"filled": false, "fill": "white", "size": 50}}
+        //     }, 
+        //     {"mark": "line"}, 
+        //     {
+        //         "encoding": {
+        //         "x": {"aggregate": "max", "field": "TIME"},
+        //         "y": {"aggregate": {"argmax": "TIME"}, "field": "Value"}
+        //         },
+        //         "layer": [
+        //             // {"mark": {"type": "circle", "filled": false}}, 
+        //             {
+        //                 "mark": {"type": "text", "align": "left", "dx": 10, "fontSize": 12},
+        //                 "encoding": {"text": {"field":"LOCATION", "type": "nominal"}}
+        //             }
+        //         ]
+        //     }
+        // ],
+        // "config": {"view": {"stroke": null}},
+        // "selection": {"brush": {"type": "interval"}}
     }]
 }
 
