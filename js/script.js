@@ -160,23 +160,25 @@ var line3 = {
     "vconcat": [{
         "data": {
         //   "url":"https://api.covidtracking.com/v1/states/current.csv"
-            "url":"./data/refugee.csv"
+            "url":"./data/unemployment.csv"
         },
         "transform": [{
-            "filter": "datum.Total >= 1000000"
+            "filter": "datum.TIME >= 2010",
+            "filter": "datum.SUBJECT == 'TOT'",
+            "filter": "datum.LOCATION == 'TUR'",
         }],
         "width": 480,
-        "height": 360,
+        "height": 480,
         // "height": {"step": 1},
         "mark": "line",
         "encoding": {
-            "x": {"field": "Year", "type": "temporal", "title": "Year"},
-            "y": {"field": "Total", "type": "quantitative", "title": "Total Refugee Population"},
+            "x": {"field": "TIME", "type": "temporal", "title": "Year"},
+            "y": {"field": "Value", "type": "quantitative", "title": "Unemployment Rate"},
             // "color": {"field": "Country of origin", "type": "nominal"},
             "color": {
                 "condition": {
                     "selection": "hover",
-                    "field": "Country of origin",
+                    "field": "LOCATION",
                     "type": "nominal",
                     "legend": null
                 },
@@ -189,7 +191,7 @@ var line3 = {
                 },
                 "value": 0.2
             },
-            // "tooltip": {"field": "Total", "type": "quantitative"},
+            "tooltip": {"field": "Value", "type": "quantitative"},
         },
         "layer": [
             {
@@ -198,8 +200,8 @@ var line3 = {
                     "type": "single",
                     "on": "mouseover",
                     "empty": "all",
-                    "fields": ["Country of origin"],
-                    "init": {"Country of origin": "Syrian Arab Rep."}
+                    "fields": ["LOCATION"],
+                    "init": {"LOCATION": "TUR"}
                 }
                 },
                 "mark": {"type": "line", "strokeWidth": 10, "stroke": "transparent", "point": {"filled": false, "fill": "white", "size": 50}}
@@ -207,14 +209,14 @@ var line3 = {
             {"mark": "line"}, 
             {
                 "encoding": {
-                "x": {"aggregate": "max", "field": "Year"},
-                "y": {"aggregate": {"argmax": "Year"}, "field": "Total"}
+                "x": {"aggregate": "max", "field": "TIME"},
+                "y": {"aggregate": {"argmax": "TIME"}, "field": "Value"}
                 },
                 "layer": [
                     // {"mark": {"type": "circle", "filled": false}}, 
                     {
                         "mark": {"type": "text", "align": "left", "dx": 10, "fontSize": 12},
-                        "encoding": {"text": {"field":"Country of origin", "type": "nominal"}}
+                        "encoding": {"text": {"field":"LOCATION", "type": "nominal"}}
                     }
                 ]
             }
@@ -228,4 +230,3 @@ vegaEmbed('#line1', line1);
 vegaEmbed('#bar2', bar2);
 vegaEmbed('#pie2', pie2);
 vegaEmbed('#line3', line3);
-vegaEmbed('#pie2', pie2);
