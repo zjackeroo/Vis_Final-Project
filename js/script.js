@@ -42,16 +42,25 @@ var line1 = {
                     "on": "mouseover",
                     "empty": "all",
                     "fields": ["Country of origin"],
-                    "init": {"Country of origin": "Syrian Arab Rep."}
+                    "init": {"Country of origin": "Syrian Arab Rep."},
                 }
                 },
-                "mark": {"type": "line", "strokeWidth": 10, "stroke": "transparent", "point": {"filled": false, "fill": "white", "size": 50}}
+                "mark": {
+                    "type": "line", 
+                    "strokeWidth": 10, 
+                    "stroke": "transparent", 
+                    "point": {
+                        "filled": false, 
+                        "fill": "white", "size": 50
+                    }, 
+                    "tooltip": {"field": "Total", "type": "quantitative"}
+                }
             }, 
-            {"mark": "line"}, 
+            {"mark": "line"},
             {
                 "encoding": {
-                "x": {"aggregate": "max", "field": "Year"},
-                "y": {"aggregate": {"argmax": "Year"}, "field": "Total"}
+                    "x": {"aggregate": "max", "field": "Year"},
+                    "y": {"aggregate": {"argmax": "Year"}, "field": "Total"}
                 },
                 "layer": [
                     // {"mark": {"type": "circle", "filled": false}}, 
