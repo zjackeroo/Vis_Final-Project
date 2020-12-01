@@ -54,10 +54,8 @@ var line1 = {
                         "filled": false, 
                         "fill": "white", "size": 50
                     }, 
+                    "cursor": "pointer",
                     "tooltip": true
-                    // "tooltip": {
-                    //     "field": "Total", "type": "quantitative"
-                    // }
                 }
             }, 
             {"mark": "line"},
