@@ -222,13 +222,7 @@ var map3 = {
         "format": {
           "type": "topojson",
           "feature": "countries"
-        },
-        "transform": [
-          {
-            "type": "filter",
-            "expr": "type !== 'albersUsa' || datum.id === 840"
-          }
-        ]
+        }
       },
       {
         "name": "graticule",
