@@ -11,7 +11,9 @@ var line1 = {
         "width": 480,
         "height": 360,
         // "height": {"step": 1},
-        // "mark": "line",
+        "mark": {
+            "type": "line"
+        },
         "encoding": {
             "x": {"field": "Year", "type": "temporal", "title": "Year"},
             "y": {"field": "Total", "type": "quantitative", "title": "Total Refugee Population"},
@@ -31,8 +33,7 @@ var line1 = {
                     "value": 1
                 },
                 "value": 0.2
-            },
-            // "tooltip": {"field": "Total", "type": "quantitative"},
+            }
         },
         "layer": [
             {
@@ -53,7 +54,10 @@ var line1 = {
                         "filled": false, 
                         "fill": "white", "size": 50
                     }, 
-                    "tooltip": {"field": "Total", "type": "quantitative"}
+                    "tooltip": true
+                    // "tooltip": {
+                    //     "field": "Total", "type": "quantitative"
+                    // }
                 }
             }, 
             {"mark": "line"},
