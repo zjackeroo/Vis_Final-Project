@@ -7,6 +7,7 @@ body {
 }
 
 .container {
+    width: 750px;
     text-align: center;
 }
 
@@ -16,4 +17,10 @@ h1 {
 
 h2 {
     text-align: center;
+}
+
+hr.rounded {
+    border-top: 3px solid rgb(77, 77, 77);
+    /* border-top: 3px solid #ff2882; */
+    border-radius: 5px;
 }
