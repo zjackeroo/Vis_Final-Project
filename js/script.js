@@ -38,13 +38,13 @@ var line1 = {
         "layer": [
             {
                 "selection": {
-                "hover": {
-                    "type": "single",
-                    "on": "mouseover",
-                    "empty": "all",
-                    "fields": ["Country of origin"],
-                    "init": {"Country of origin": "Syrian Arab Rep."},
-                }
+                    "hover": {
+                        "type": "single",
+                        "on": "mouseover",
+                        "empty": "all",
+                        "fields": ["Country of origin"],
+                        "init": {"Country of origin": "Syrian Arab Rep."},
+                    }
                 },
                 "mark": {
                     "type": "line", 
@@ -281,7 +281,9 @@ var line3 = {
         "width": 480,
         "height": 480,
         // "height": {"step": 1},
-        "mark": "line",
+        "mark": {
+            "type": "line"
+        },
         "encoding": {
             "x": {"field": "TIME", "type": "temporal", "title": "Year"},
             "y": {"field": "Value", "type": "quantitative", "title": "Unemployment Rate"},
@@ -302,26 +304,38 @@ var line3 = {
                 },
                 "value": 0.2
             },
-            // "tooltip": {"field": "Value", "type": "quantitative"},
         },
         "layer": [
             {
                 "selection": {
-                "hover": {
-                    "type": "single",
-                    "on": "mouseover",
-                    "empty": "all",
-                    "fields": ["LOCATION"],
-                    "init": {"LOCATION": "TUR"}
-                }
+                    "hover": {
+                        "type": "single",
+                        "on": "mouseover",
+                        "empty": "all",
+                        "fields": ["LOCATION"],
+                        "init": {"LOCATION": "TUR"}
+                    }
                 },
-                "mark": {"type": "line", "strokeWidth": 10, "stroke": "transparent", "point": {"filled": false, "fill": "white", "size": 50}}
+                "mark": {
+                    "type": "line", 
+                    "strokeWidth": 10, 
+                    "stroke": "transparent", 
+                    "point": {
+                        "filled": false, 
+                        "fill": "white", 
+                        "size": 50
+                    },
+                    "cursor": "pointer",
+                    "tooltip": true
+                }
             }, 
-            {"mark": "line"}, 
+            {"mark": {
+                "type": "line"
+            }}, 
             {
                 "encoding": {
-                "x": {"aggregate": "max", "field": "TIME"},
-                "y": {"aggregate": {"argmax": "TIME"}, "field": "Value"}
+                    "x": {"aggregate": "max", "field": "TIME"},
+                    "y": {"aggregate": {"argmax": "TIME"}, "field": "Value"}
                 },
                 "layer": [
                     // {"mark": {"type": "circle", "filled": false}}, 
