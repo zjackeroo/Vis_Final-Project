@@ -200,69 +200,70 @@ var map3 = {
     "autosize": "none",
     "signals": [
       {
-        "name": "type",
-        "value": "mercator"
+            "name": "type",
+            "value": "mercator"
       },
       { "name": "scale" },
       { "name": "center0" },
       { "name": "center1" }
     ],
     "projections": [
-      {
-        "name": "projection",
-        "type": "mercator",
-        "scale": 550,
-        "center": [33, 44]
-      }
+        {
+            "name": "projection",
+            "type": "mercator",
+            "scale": 550,
+            "center": [33, 44]
+        }
     ],
     "data": [
-      {
-        "name": "world",
-        "url": "./data/world-110m.json",
-        "format": {
-          "type": "topojson",
-          "feature": "countries"
+        {
+            "name": "world",
+            "url": "./data/world-110m.json",
+            "format": {
+                "type": "topojson",
+                "feature": "countries"
+            }
+        },
+        {
+            "name": "graticule",
+            "transform": [{ "type": "graticule" }]
         }
-      },
-      {
-        "name": "graticule",
-        "transform": [{ "type": "graticule" }]
-      }
     ],
     "marks": [
-      {
-        "type": "shape",
-        "from": {"data": "graticule"},
-        "encode": {
-          "update": {
-            "strokeWidth": {"value": 1},
-            "stroke": {"value": "#BDBDBD"}
-          }
+        {
+            "type": "shape",
+            "from": {"data": "graticule"},
+            "encode": {
+                "update": {
+                    "strokeWidth": {"value": 1},
+                    "stroke": {"value": "#BDBDBD"}
+                }
+            },
+            "transform": [
+                { "type": "geoshape", "projection": "projection" }
+            ]
         },
-        "transform": [
-          { "type": "geoshape", "projection": "projection" }
-        ]
-      },
-      {
-        "type": "shape",
-        "from": {"data": "world"},
-        "encode": {
-          "update": {
-            "strokeWidth": {"value": 1},
-            "stroke": {"value": "#000"},
-            "fill": {"value": "#BDBDBD"},
-            "zindex": {"value": 0}
-          },
-          "hover": {
-            "strokeWidth": {"value": 2},
-            "stroke": {"value": "#FF0000"},
-            "zindex": {"value": 1}
-          }
-        },
-        "transform": [
-          { "type": "geoshape", "projection": "projection" }
-        ]
-      }
+        {
+            "type": "shape",
+            "from": {"data": "world"},
+            
+            "encode": {
+                "update": {
+                    "strokeWidth": {"value": 1},
+                    "stroke": {"value": "#000"},
+                    "fill": {"value": "#BDBDBD"},
+                    "zindex": {"value": 0}
+                },
+                "hover": {
+                    "strokeWidth": {"value": 2},
+                    "stroke": {"value": "#FF0000"},
+                    "zindex": {"value": 1}
+                }
+            },
+            "transform": [
+                {"type": "geoshape", "projection": "projection" }
+            ]
+        }
     ]
 }
 
