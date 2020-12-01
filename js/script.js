@@ -246,7 +246,6 @@ var map3 = {
         {
             "type": "shape",
             "from": {"data": "world"},
-            
             "encode": {
                 "update": {
                     "strokeWidth": {"value": 1},
