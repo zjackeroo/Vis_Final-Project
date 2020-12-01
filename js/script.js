@@ -182,6 +182,84 @@ var pie2 = {
 
 }
 
+var map3 = {
+    "$schema": "https://vega.github.io/schema/vega/v5.json",
+    "width": 750,
+    "height": 480,
+    "autosize": "none",
+    "signals": [
+      {
+        "name": "type",
+        "value": "mercator"
+      },
+      { "name": "scale" },
+      { "name": "center0" },
+      { "name": "center1" }
+    ],
+    "projections": [
+      {
+        "name": "projection",
+        "type": "mercator",
+        "scale": 550,
+        "center": [33, 44]
+      }
+    ],
+    "data": [
+      {
+        "name": "world",
+        "url": "./data/world-110m.json",
+        "format": {
+          "type": "topojson",
+          "feature": "countries"
+        },
+        "transform": [
+          {
+            "type": "filter",
+            "expr": "type !== 'albersUsa' || datum.id === 840"
+          }
+        ]
+      },
+      {
+        "name": "graticule",
+        "transform": [{ "type": "graticule" }]
+      }
+    ],
+    "marks": [
+      {
+        "type": "shape",
+        "from": {"data": "graticule"},
+        "encode": {
+          "update": {
+            "strokeWidth": {"value": 1},
+            "stroke": {"value": "#BDBDBD"}
+          }
+        },
+        "transform": [
+          { "type": "geoshape", "projection": "projection" }
+        ]
+      },
+      {
+        "type": "shape",
+        "from": {"data": "world"},
+        "encode": {
+          "update": {
+            "strokeWidth": {"value": 1},
+            "stroke": {"value": "#000"},
+            "fill": {"value": "#BDBDBD"},
+            "zindex": {"value": 0}
+          },
+          "hover": {
+            "strokeWidth": {"value": 2},
+            "stroke": {"value": "#FF0000"},
+            "zindex": {"value": 1}
+          }
+        },
+        "transform": [
+          { "type": "geoshape", "projection": "projection" }
+        ]
+      }
+    ]
+}
 
 var line3 = {
     "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
@@ -190,11 +268,11 @@ var line3 = {
         //   "url":"https://api.covidtracking.com/v1/states/current.csv"
             "url":"./data/unemployment.csv"
         },
-        "transform": [{
-            // "filter": {"field": "TIME", "gt": "2010"},
-            "filter": {"field": "LOCATION", "equal": "TUR"},
-            // "filter": {"field": "SUBJECT", "equal": "TOT"},
-        }],
+        // "transform": [{
+        //     // "filter": {"field": "TIME", "gt": "2010"},
+        //     "filter": {"field": "LOCATION", "equal": "TUR"},
+        //     // "filter": {"field": "SUBJECT", "equal": "TOT"},
+        // }],
         "width": 480,
         "height": 480,
         // "height": {"step": 1},
@@ -257,4 +335,5 @@ var line3 = {
 vegaEmbed('#line1', line1);
 vegaEmbed('#bar2', bar2);
 vegaEmbed('#pie2', pie2);
+vegaEmbed('#map3', map3);
 vegaEmbed('#line3', line3);
