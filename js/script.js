@@ -218,7 +218,7 @@ var map3 = {
     "data": [
         {
             "name": "world",
-            "url": "./data/world-110m.json",
+            "url": "./data/countries-110m.json",
             "format": {
                 "type": "topojson",
                 "feature": "countries"
