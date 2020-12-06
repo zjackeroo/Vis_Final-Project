@@ -1,4 +1,4 @@
-Year,Country of origin,Country of origin (ISO),Country of asylum,Country of asylum (ISO),Female 0 — 4,Female 5 — 11,Female 12 — 17,Female 5 — 17,Female 18 — 59,Female 60,f_other,Female total,Male 0 — 4,Male 5 — 11,Male 12 — 17,Male 5 — 17,Male 18 — 59,Male 60,Male total,m_other,Total
+Year,Origin,Origin_Code,Country,Code,Female 0 — 4,Female 5 — 11,Female 12 — 17,Female 5 — 17,Female 18 — 59,Female 60,f_other,Female total,Male 0 — 4,Male 5 — 11,Male 12 — 17,Male 5 — 17,Male 18 — 59,Male 60,Male total,m_other,Total
 2010,Syrian Arab Rep.,SYR,Egypt,EGY,0,0,0,,0,0,,0,0,0,0,,8,0,8,,8
 2010,Syrian Arab Rep.,SYR,Belgium,BEL,0,0,0,,0,0,,61,0,0,0,,0,0,168,,229
 2010,Syrian Arab Rep.,SYR,Brazil,BRA,0,0,0,,0,0,,0,0,0,0,,5,0,5,,5

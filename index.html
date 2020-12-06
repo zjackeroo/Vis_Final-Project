@@ -110,18 +110,19 @@
       // Data and color scale
       var data = d3.map();
       var colorScale = d3.scaleThreshold()
-        .domain([0, 1000, 10000, 100000, 500000, 1000000, 5000000, 10000000])
-        .range(d3.schemeGreys[8]);
+        .domain([0, 100, 1000, 10000, 100000, 500000, 1000000, 5000000, 10000000])
+        .range(d3.schemeGreys[9]);
 
       // Load external data and boot
       d3.queue()
         .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
-        .defer(d3.csv, "./data/destination.csv", function(d) { data.set(d.Code, d.Total, d.Year); })
+        .defer(d3.csv, "./data/destination.csv", function(d) { data.set(d.Code, d.Total); })
         .await(ready);
 
       function ready(error, topo) {
 
         let mouseOver = function(d) {
+          // console.log(d)
           d3.selectAll(".Country")
             // .transition()
             // .duration(200)
