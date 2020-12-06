@@ -44,7 +44,7 @@
     </h1>
 
     <!-- Create an element where the map will take place -->
-    <svg id="my_dataviz" width="750" height="480"></svg>
+    <svg id="map3" width="750" height="480"></svg>
 
     <script>
 
@@ -63,7 +63,7 @@
       // Data and color scale
       var data = d3.map();
       var colorScale = d3.scaleThreshold()
-        .domain([10, 100, 1000, 10000, 100000, 500000, 1000000, 10000000])
+        .domain([0, 1000, 10000, 100000, 500000, 1000000, 5000000, 10000000])
         .range(d3.schemeGreys[8]);
 
       // Load external data and boot
@@ -72,6 +72,17 @@
         // .defer(d3.csv, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world_population.csv", function(d) { data.set(d.code, +d.pop); })
         .defer(d3.csv, "./data/destination.csv", function(d) { data.set(d.Code, +d.Total); })
         .await(ready);
+
+      // Add Tooltip
+      var Tooltip = d3.select("#map3")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 1)
+        .style("background-color", "white")
+        .style("border", "solid")
+        .style("border-width", "2px")
+        .style("border-radius", "5px")
+        .style("padding", "5px")
 
       function ready(error, topo) {
 
@@ -84,18 +95,20 @@
             // .transition()
             // .duration(200)
             .style("opacity", 1)
-            .style("stroke", "black")
+            .style("stroke-width", "2")
+          Tooltip.style("opacity", 1)
         }
 
         let mouseLeave = function(d) {
           d3.selectAll(".Country")
             .transition()
-            .duration(200)
+            .duration(100)
             .style("opacity", 1)
           d3.select(this)
-            // .transition()
-            // .duration(200)
-            .style("stroke", "transparent")
+            .transition()
+            .duration(100)
+            .style("stroke-width", "1")
+          Tooltip.style("opacity", 0)
         }
 
         // Draw the map
@@ -113,13 +126,13 @@
             d.total = data.get(d.id) || 0;
             return colorScale(d.total);
           })
-          .style("stroke", "transparent")
+          .style("stroke", "black")
           .attr("class", function(d){ return "Country" } )
-          .style("opacity", .8)
+          .style("opacity", 1)
           .on("mouseover", mouseOver )
           .on("mouseleave", mouseLeave )
       }
-    
+
     </script>
 
   </body>
