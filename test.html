@@ -19,6 +19,7 @@
     <script src="http://d3js.org/d3.v4.js"></script>
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 
     <!-- Load Vega Lite -->
     <script src="https://cdn.jsdelivr.net/npm/vega@5.17.0"></script>
@@ -35,7 +36,7 @@
     <link rel="stylesheet" href="./css/style.css" />
 
     <!-- Mi JavaScript -->
-    <script defer src="./js/test.js" delay></script>
+    <!-- <script defer src="./js/test.js" delay></script> -->
 
   </head>
   <body>
@@ -45,6 +46,7 @@
 
     <!-- Create an element where the map will take place -->
     <svg id="map3" width="750" height="480"></svg>
+    <div class="tooltip"></div>
 
     <script>
 
@@ -73,17 +75,6 @@
         .defer(d3.csv, "./data/destination.csv", function(d) { data.set(d.Code, +d.Total); })
         .await(ready);
 
-      // Add Tooltip
-      var Tooltip = d3.select("#map3")
-        .append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 1)
-        .style("background-color", "white")
-        .style("border", "solid")
-        .style("border-width", "2px")
-        .style("border-radius", "5px")
-        .style("padding", "5px")
-
       function ready(error, topo) {
 
         let mouseOver = function(d) {
@@ -96,7 +87,20 @@
             // .duration(200)
             .style("opacity", 1)
             .style("stroke-width", "2")
-          Tooltip.style("opacity", 1)
+          const pos = d3.pointer(event, window);
+          tooltip = d3.select('.tooltip')
+            .style('display', 'block')
+            .style("position", "absolute")
+            // .style("background-color", "black")
+            .style("border", "solid")
+            .style("border-width", "2px")
+            .style("border-radius", "5px")
+            .style("padding", "5px")
+            .style('top', pos[1] + "px")
+            .style('left', pos[0]+5 + "px")
+            .style('background-color', 'white')
+            .style('color', 'black')
+            .html(`<div style='font-size:15px'>Country: ${d.properties.name} <br> Number of refugee: ${d.total}</div>`)
         }
 
         let mouseLeave = function(d) {
@@ -108,7 +112,8 @@
             .transition()
             .duration(100)
             .style("stroke-width", "1")
-          Tooltip.style("opacity", 0)
+          d3.select('.tooltip')
+            .style('display', 'none');
         }
 
         // Draw the map
