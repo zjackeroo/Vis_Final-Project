@@ -116,7 +116,7 @@
       // Load external data and boot
       d3.queue()
         .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
-        .defer(d3.csv, "./data/destination.csv", function(d) { data.set(d.Code, +d.Total); })
+        .defer(d3.csv, "./data/destination.csv", function(d) { data.set(d.Code, d.Total, d.Year); })
         .await(ready);
 
       function ready(error, topo) {
@@ -130,7 +130,7 @@
             // .transition()
             // .duration(200)
             .style("opacity", 1)
-            .style("stroke-width", "2")
+            .style("stroke-width", "3")
           const pos = d3.pointer(event, window);
           tooltip = d3.select('#tooltip')
             .style('display', 'block')
@@ -139,8 +139,8 @@
             .style("border-width", "2px")
             .style("border-radius", "5px")
             .style("padding", "5px")
-            .style('top', pos[1] + "px")
-            .style('left', pos[0] + "px")
+            .style('top', pos[1]-100 + "px")
+            .style('left', pos[0]-50 + "px")
             .style('background-color', 'white')
             .style('color', 'black')
             .html(`<div style='font-size:15px'>Country: ${d.properties.name} <br> Number of refugee: ${d.total}</div>`)
