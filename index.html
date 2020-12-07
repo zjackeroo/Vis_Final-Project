@@ -109,9 +109,12 @@
 
       // Data and color scale
       var data = d3.map();
+      // var colorScale = d3.scaleSqrt()
+      //   .domain([0,1000000])
+      //   .range(["grey", "black"]);
       var colorScale = d3.scaleThreshold()
-        .domain([0, 100, 1000, 10000, 100000, 500000, 1000000, 5000000, 10000000])
-        .range(d3.schemeGreys[9]);
+        .domain([0, 10, 100, 1000, 10000, 100000, 500000, 1000000, 5000000, 10000000])
+        .range(d3.schemeBlues[9]);
 
       // Load external data and boot
       d3.queue()
@@ -151,6 +154,21 @@
             .style("opacity", 1)
             .style("stroke-width", "3")
           const pos = d3.pointer(event, window);
+          if (d.id=='SYR') {
+            tooltip = d3.select('#tooltip')
+            .style('display', 'block')
+            .style("position", "absolute")
+            .style("border", "solid")
+            .style("border-width", "2px")
+            .style("border-radius", "5px")
+            .style("padding", "5px")
+            .style('top', pos[1]-50 + "px")
+            .style('left', pos[0]-20 + "px")
+            .style('background-color', 'white')
+            .style('color', 'black')
+            .html(`<div style='font-size:15px'> &#9733 ${d.properties.name}</div>`)
+            return
+          }
           tooltip = d3.select('#tooltip')
             .style('display', 'block')
             .style("position", "absolute")
@@ -179,16 +197,22 @@
         }
 
         let getColor = function(d) {
+          if (d.id=='SYR') {
+            return 'red';
+          }
           // console.log(d.id)
           // console.log(destination.filter(i=>i.Code==d.id)[0])
-          // d.total = data.get(d.id) || 0;
           detail = destination.filter(i=>i.Code==d.id)[0]
           if (detail==null){
-            total = 0
+            total = 0;
           } else {
-            total = destination.filter(i=>i.Code==d.id)[0].Total
+            // if (detail.Code==='SYR') {
+            //   console.log("found")
+            //   return 'red';
+            // }
+            total = destination.filter(i=>i.Code==d.id)[0].Total;
           }
-          return colorScale(total)
+          return colorScale(total);
         }
 
         // Draw the map
