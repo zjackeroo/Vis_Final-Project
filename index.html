@@ -19,7 +19,7 @@
     <script src="http://d3js.org/d3.v4.js"></script>
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
-    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+    <!-- <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script> -->
 
     <!-- Load Vega Lite -->
     <script src="https://cdn.jsdelivr.net/npm/vega@5.17.0"></script>
@@ -118,7 +118,7 @@
         .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
         // .defer(d3.csv, "./data/destination.csv", function(d) { data.set(d.Code, d.Total); })
         .defer(d3.csv, "./data/destination.csv")
-        .defer(d3.csv, "./data/unemployment.csv")
+        .defer(d3.csv, "./data/raw_unemployment.csv")
         .await(ready);
 
       function ready(error, topo, destination, unemployment) {
