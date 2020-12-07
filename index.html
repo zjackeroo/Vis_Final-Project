@@ -116,13 +116,24 @@
       // Load external data and boot
       d3.queue()
         .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
-        .defer(d3.csv, "./data/destination.csv", function(d) { data.set(d.Code, d.Total); })
+        // .defer(d3.csv, "./data/destination.csv", function(d) { data.set(d.Code, d.Total); })
+        .defer(d3.csv, "./data/destination.csv")
+        .defer(d3.csv, "./data/unemployment.csv")
         .await(ready);
 
-      function ready(error, topo) {
+      function ready(error, topo, destination, unemployment) {
+
+        console.log(topo)
+        destination = destination.filter(d=>d.Year==2019)
+        console.log(destination)
+        console.log(unemployment)
+
+        let getPop = function(d) {
+          
+        }
 
         let mouseOver = function(d) {
-          // console.log(d)
+          console.log(d)
           d3.selectAll(".Country")
             // .transition()
             // .duration(200)
@@ -160,6 +171,19 @@
             .style('display', 'none');
         }
 
+        let getColor = function(d) {
+          // console.log(d.id)
+          // console.log(destination.filter(i=>i.Code==d.id)[0])
+          // d.total = data.get(d.id) || 0;
+          detail = destination.filter(i=>i.Code==d.id)[0]
+          if (detail==null){
+            total = 0
+          } else {
+            total = destination.filter(i=>i.Code==d.id)[0].Total
+          }
+          return colorScale(total)
+        }
+
         // Draw the map
         svg.append("g")
           .selectAll("path")
@@ -171,10 +195,7 @@
             .projection(projection)
           )
           // set the color of each country
-          .attr("fill", function (d) {
-            d.total = data.get(d.id) || 0;
-            return colorScale(d.total);
-          })
+          .attr("fill", getColor)
           .style("stroke", "black")
           .attr("class", function(d){ return "Country" } )
           .style("opacity", 1)
