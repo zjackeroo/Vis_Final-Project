@@ -266,93 +266,93 @@ var pie2 = {
 //     ]
 // }
 
-var line3 = {
-    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-    "vconcat": [{
-        "data": {
-        //   "url":"https://api.covidtracking.com/v1/states/current.csv"
-            "url":"./data/unemployment.csv"
-        },
-        // "transform": [{
-        //     // "filter": {"field": "TIME", "gt": "2010"},
-        //     "filter": {"field": "LOCATION", "equal": "TUR"},
-        //     // "filter": {"field": "SUBJECT", "equal": "TOT"},
-        // }],
-        "width": 480,
-        "height": 480,
-        // "height": {"step": 1},
-        "mark": {
-            "type": "line"
-        },
-        "encoding": {
-            "x": {"field": "TIME", "type": "temporal", "title": "Year"},
-            "y": {"field": "Value", "type": "quantitative", "title": "Unemployment Rate"},
-            // "color": {"field": "Country of origin", "type": "nominal"},
-            "color": {
-                "condition": {
-                    "selection": "hover",
-                    "field": "LOCATION",
-                    "type": "nominal",
-                    "legend": null
-                },
-                "value": "grey"
-            },
-            "opacity": {
-                "condition": {
-                    "selection": "hover",
-                    "value": 1
-                },
-                "value": 0.2
-            },
-        },
-        "layer": [
-            {
-                "selection": {
-                    "hover": {
-                        "type": "single",
-                        "on": "mouseover",
-                        "empty": "all",
-                        "fields": ["LOCATION"],
-                        "init": {"LOCATION": "TUR"}
-                    }
-                },
-                "mark": {
-                    "type": "line", 
-                    "strokeWidth": 10, 
-                    "stroke": "transparent", 
-                    "point": {
-                        "filled": false, 
-                        "fill": "white", 
-                        "size": 50
-                    },
-                    "cursor": "pointer",
-                    "tooltip": true
-                }
-            }, 
-            {"mark": {
-                "type": "line"
-            }}, 
-            {
-                "encoding": {
-                    "x": {"aggregate": "max", "field": "TIME"},
-                    "y": {"aggregate": {"argmax": "TIME"}, "field": "Value"}
-                },
-                "layer": [
-                    // {"mark": {"type": "circle", "filled": false}}, 
-                    {
-                        "mark": {"type": "text", "align": "left", "dx": 10, "fontSize": 12},
-                        "encoding": {"text": {"field":"LOCATION", "type": "nominal"}}
-                    }
-                ]
-            }
-        ],
-        "config": {"view": {"stroke": null}},
-        "selection": {"brush": {"type": "interval"}}
-    }]
-}
+// var line3 = {
+//     "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+//     "vconcat": [{
+//         "data": {
+//         //   "url":"https://api.covidtracking.com/v1/states/current.csv"
+//             "url":"./data/unemployment.csv"
+//         },
+//         // "transform": [{
+//         //     // "filter": {"field": "TIME", "gt": "2010"},
+//         //     "filter": {"field": "LOCATION", "equal": "TUR"},
+//         //     // "filter": {"field": "SUBJECT", "equal": "TOT"},
+//         // }],
+//         "width": 480,
+//         "height": 480,
+//         // "height": {"step": 1},
+//         "mark": {
+//             "type": "line"
+//         },
+//         "encoding": {
+//             "x": {"field": "TIME", "type": "temporal", "title": "Year"},
+//             "y": {"field": "Value", "type": "quantitative", "title": "Unemployment Rate"},
+//             // "color": {"field": "Country of origin", "type": "nominal"},
+//             "color": {
+//                 "condition": {
+//                     "selection": "hover",
+//                     "field": "LOCATION",
+//                     "type": "nominal",
+//                     "legend": null
+//                 },
+//                 "value": "grey"
+//             },
+//             "opacity": {
+//                 "condition": {
+//                     "selection": "hover",
+//                     "value": 1
+//                 },
+//                 "value": 0.2
+//             },
+//         },
+//         "layer": [
+//             {
+//                 "selection": {
+//                     "hover": {
+//                         "type": "single",
+//                         "on": "mouseover",
+//                         "empty": "all",
+//                         "fields": ["LOCATION"],
+//                         "init": {"LOCATION": "TUR"}
+//                     }
+//                 },
+//                 "mark": {
+//                     "type": "line", 
+//                     "strokeWidth": 10, 
+//                     "stroke": "transparent", 
+//                     "point": {
+//                         "filled": false, 
+//                         "fill": "white", 
+//                         "size": 50
+//                     },
+//                     "cursor": "pointer",
+//                     "tooltip": true
+//                 }
+//             }, 
+//             {"mark": {
+//                 "type": "line"
+//             }}, 
+//             {
+//                 "encoding": {
+//                     "x": {"aggregate": "max", "field": "TIME"},
+//                     "y": {"aggregate": {"argmax": "TIME"}, "field": "Value"}
+//                 },
+//                 "layer": [
+//                     // {"mark": {"type": "circle", "filled": false}}, 
+//                     {
+//                         "mark": {"type": "text", "align": "left", "dx": 10, "fontSize": 12},
+//                         "encoding": {"text": {"field":"LOCATION", "type": "nominal"}}
+//                     }
+//                 ]
+//             }
+//         ],
+//         "config": {"view": {"stroke": null}},
+//         "selection": {"brush": {"type": "interval"}}
+//     }]
+// }
 
 vegaEmbed('#line1', line1);
 vegaEmbed('#bar2', bar2);
 vegaEmbed('#pie2', pie2);
-vegaEmbed('#map3', map3);
-vegaEmbed('#line3', line3);
+// vegaEmbed('#map3', map3);
+// vegaEmbed('#line3', line3);
