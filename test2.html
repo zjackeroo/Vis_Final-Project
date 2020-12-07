@@ -154,6 +154,7 @@ slider.append("line")
       })
       .on("start drag", function() {
         currentValue = d3.event.x;
+        // console.log(currentValue)
         update(x.invert(currentValue)); 
       })
     );

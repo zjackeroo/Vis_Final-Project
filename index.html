@@ -89,7 +89,6 @@
       </p>
     </div>
 
-    <!-- Timeline Slider -->
     <div id="vis">
       <button id="play-button">Play</button>
     </div>
@@ -257,8 +256,8 @@
         var formatDate = d3.timeFormat("%Y");
         var parseDate = d3.timeParse("%Y");
 
-        var startDate = new Date("2010-01-01"),
-            endDate = new Date("2019-03-01");
+        var startDate = new Date("2009-11-01"),
+            endDate = new Date("2019-04-01");
 
         var margin = {top:20, right:20, bottom:20, left:20},
             width = 750 - margin.left - margin.right,
@@ -301,8 +300,10 @@
               .on("start drag", function() {
                 // console.log("dragging: ", formatDate(x.invert(currentValue)));
                 // console.log("d3 event", event.x)
-                currentValue = event.x - margin.left;
-                console.log("invoking update function, currentValue=", currentValue)
+                currentValue = event.x - 277;
+                console.log("")
+                console.log("cursor x value: ", currentValue)
+                console.log("x.invert value: ", x.invert(currentValue))
                 update(x.invert(currentValue)); 
                 current_year = formatDate(x.invert(currentValue));
                 console.log("current_year is: ", current_year)
