@@ -345,7 +345,7 @@
 
         // d3.csv("./data/circles.csv", prepare, function(data) {
           dataset = timeline;
-          drawPlot(dataset);
+          // drawPlot(dataset);
           
           playButton
             .on("click", function() {
@@ -373,6 +373,10 @@
         function step() {
           update(x.invert(currentValue));
           currentValue = currentValue + (targetValue/151);
+          current_year = formatDate(x.invert(currentValue));
+          console.log("current_year is: ", current_year)
+          // Redraw Map
+          drawMap(current_year);
           if (currentValue > targetValue) {
             moving = false;
             currentValue = 0;
@@ -420,7 +424,7 @@
           var newData = dataset.filter(function(d) {
             return d.date < h;
           })
-          drawPlot(newData);
+          // drawPlot(newData);
         }
         ///////////////////////////////////////////////////////////////////////////////////////
       }
