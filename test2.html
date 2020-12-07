@@ -1,7 +1,42 @@
 <!DOCTYPE html>
 <head>
-  <meta charset="utf-8">
-  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Test 2</title>
+
+  <!-- Milligram CSS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css"> 
+  
+  <!-- Load Javascript files -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.1.1/d3.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+  <script src="https://unpkg.com/topojson@3"></script>
+
+  <script src="http://d3js.org/d3.v4.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+  <!-- <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script> -->
+
+  <!-- Load Vega Lite -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.17.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.17.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.12.2"></script>
+  <style media="screen">
+    /* Add space between Vega-Embed links  */
+    .vega-actions a {
+      margin-right: 5px;
+    }
+  </style>
+
+  <!-- Mi CSS -->
+  <link rel="stylesheet" href="./css/style.css" />
+
+  <!-- Mi JavaScript -->
+  <script defer src="./js/script.js" delay></script>
+  
   <style>
     body {
       font-family:"avenir next", Arial, sans-serif;
@@ -73,11 +108,11 @@
 <script>
 
 var formatDateIntoYear = d3.timeFormat("%Y");
-var formatDate = d3.timeFormat("%b %Y");
-var parseDate = d3.timeParse("%m/%d/%y");
+var formatDate = d3.timeFormat("%Y");
+var parseDate = d3.timeParse("%Y");
 
-var startDate = new Date("2004-11-01"),
-    endDate = new Date("2017-04-01");
+var startDate = new Date("2010-01-01"),
+    endDate = new Date("2019-03-01");
 
 var margin = {top:50, right:50, bottom:0, left:50},
     width = 960 - margin.left - margin.right,
