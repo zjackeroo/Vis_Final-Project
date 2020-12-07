@@ -129,11 +129,18 @@
         console.log(unemployment)
 
         let getPop = function(d) {
-          
+          detail = destination.filter(i=>i.Code==d.id)[0];
+          if (detail==null) {
+            count = 0
+          } else {
+            count = detail.Total
+          }
+          return count;
         }
 
         let mouseOver = function(d) {
-          console.log(d)
+          // console.log(getPop(d))
+          // console.log(d)
           d3.selectAll(".Country")
             // .transition()
             // .duration(200)
@@ -155,7 +162,7 @@
             .style('left', pos[0]-50 + "px")
             .style('background-color', 'white')
             .style('color', 'black')
-            .html(`<div style='font-size:15px'>Country: ${d.properties.name} <br> Number of refugee: ${d.total}</div>`)
+            .html(`<div style='font-size:15px'>Country: ${d.properties.name} <br> Number of refugee: ${getPop(d)}</div>`)
         }
 
         let mouseLeave = function(d) {
