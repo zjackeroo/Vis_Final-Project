@@ -1,169 +1,235 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Test Page 2</title>
+<head>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <style>
+    body {
+      font-family:"avenir next", Arial, sans-serif;
+      font-size: 12px;
+      color: #696969;
+    }
 
-    <!-- Milligram CSS -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css"> 
-   
-    <!-- Load Javascript files -->
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.1.1/d3.min.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
-    <script src="https://unpkg.com/topojson@3"></script>
+    #play-button {
+      position: absolute;
+      top: 140px;
+      left: 50px;
+      background: #f08080;
+      padding-right: 26px;
+      border-radius: 3px;
+      border: none;
+      color: white;
+      margin: 0;
+      padding: 0 12px;
+      width: 60px;
+      cursor: pointer;
+      height: 30px;
+    }
 
-    <script src="http://d3js.org/d3.v4.js"></script>
-    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
-    <!-- <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script> -->
-
-    <!-- Load Vega Lite -->
-    <script src="https://cdn.jsdelivr.net/npm/vega@5.17.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.17.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.12.2"></script>
-    <style media="screen">
-      /* Add space between Vega-Embed links  */
-      .vega-actions a {
-        margin-right: 5px;
-      }
-    </style>
-
-    <!-- Mi CSS -->
-    <link rel="stylesheet" href="./css/style.css" />
-
-    <!-- Mi JavaScript -->
-    <!-- <script defer src="./js/script.js" delay></script> -->
-
-  </head>
-  <body>
-    <h1>
-      Test 2
-    </h1>
-    <svg id="map3" width="750" height="480"></svg>
-    <div id="tooltip"></div>
-    <br>
-    <div id="line3">line chart 3</div>
-
-    <script>
-      // The svg
-      var svg = d3.select("svg"),
-        width = +svg.attr("width"),
-        height = +svg.attr("height");
-
-      // Map and projection
-      var path = d3.geoPath();
-      var projection = d3.geoMercator()
-        .scale(550)
-        .center([33,44])
-        // .translate([width / 2, height / 2]);
-
-      // Data and color scale
-      var data = d3.map();
-      var colorScale = d3.scaleThreshold()
-        .domain([0, 100, 1000, 10000, 100000, 500000, 1000000, 5000000, 10000000])
-        .range(d3.schemeGreys[9]);
-
-      // Load external data and boot
-      d3.queue()
-        .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
-        // .defer(d3.csv, "./data/destination.csv", function(d) { data.set(d.Code, d.Total); })
-        .defer(d3.csv, "./data/destination.csv")
-        .defer(d3.csv, "./data/raw_unemployment.csv")
-        .await(ready);
-
-      function ready(error, topo, destination, unemployment) {
-
-        console.log(topo)
-        destination = destination.filter(d=>d.Year==2019)
-        console.log(destination)
-        console.log(unemployment)
-
-        let getPop = function(d) {
-          detail = destination.filter(i=>i.Code==d.id)[0];
-          if (detail==null) {
-            count = 0
-          } else {
-            count = detail.Total
-          }
-          return count;
-        }
-
-        let mouseOver = function(d) {
-          // console.log(getPop(d))
-          // console.log(d)
-          d3.selectAll(".Country")
-            // .transition()
-            // .duration(200)
-            .style("opacity", 0.5)
-          d3.select(this)
-            // .transition()
-            // .duration(200)
-            .style("opacity", 1)
-            .style("stroke-width", "3")
-          const pos = d3.pointer(event, window);
-          tooltip = d3.select('#tooltip')
-            .style('display', 'block')
-            .style("position", "absolute")
-            .style("border", "solid")
-            .style("border-width", "2px")
-            .style("border-radius", "5px")
-            .style("padding", "5px")
-            .style('top', pos[1]-100 + "px")
-            .style('left', pos[0]-50 + "px")
-            .style('background-color', 'white')
-            .style('color', 'black')
-            .html(`<div style='font-size:15px'>Country: ${d.properties.name} <br> Number of refugee: ${getPop(d)}</div>`)
-        }
-
-        let mouseLeave = function(d) {
-          d3.selectAll(".Country")
-            .transition()
-            .duration(100)
-            .style("opacity", 1)
-          d3.select(this)
-            .transition()
-            .duration(100)
-            .style("stroke-width", "1")
-          d3.select('#tooltip')
-            .style('display', 'none');
-        }
-
-        let getColor = function(d) {
-          // console.log(d.id)
-          // console.log(destination.filter(i=>i.Code==d.id)[0])
-          // d.total = data.get(d.id) || 0;
-          detail = destination.filter(i=>i.Code==d.id)[0]
-          if (detail==null){
-            total = 0
-          } else {
-            total = destination.filter(i=>i.Code==d.id)[0].Total
-          }
-          return colorScale(total)
-        }
-
-        // Draw the map
-        svg.append("g")
-          .selectAll("path")
-          .data(topo.features)
-          .enter()
-          .append("path")
-          // draw each country
-          .attr("d", d3.geoPath()
-            .projection(projection)
-          )
-          // set the color of each country
-          .attr("fill", getColor)
-          .style("stroke", "black")
-          .attr("class", function(d){ return "Country" } )
-          .style("opacity", 1)
-          .on("mouseover", mouseOver )
-          .on("mouseleave", mouseLeave )
-      }
-    </script>
+    #play-button:hover {
+      background-color: #696969;
+    }    
     
-  </body>
-</html>
+    .ticks {
+      font-size: 10px;
+    }
+
+    .track,
+    .track-inset,
+    .track-overlay {
+      stroke-linecap: round;
+    }
+
+    .track {
+      stroke: #000;
+      stroke-opacity: 0.3;
+      stroke-width: 10px;
+    }
+
+    .track-inset {
+      stroke: #dcdcdc;
+      stroke-width: 8px;
+    }
+
+    .track-overlay {
+      pointer-events: stroke;
+      stroke-width: 50px;
+      stroke: transparent;
+      cursor: crosshair;
+    }
+
+    .handle {
+      fill: #fff;
+      stroke: #000;
+      stroke-opacity: 0.5;
+      stroke-width: 1.25px;
+    }
+  </style>
+</head>
+
+<body>
+<div id="vis">
+  <button id="play-button">Play</button>
+</div>
+<script>
+
+var formatDateIntoYear = d3.timeFormat("%Y");
+var formatDate = d3.timeFormat("%b %Y");
+var parseDate = d3.timeParse("%m/%d/%y");
+
+var startDate = new Date("2004-11-01"),
+    endDate = new Date("2017-04-01");
+
+var margin = {top:50, right:50, bottom:0, left:50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var svg = d3.select("#vis")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);  
+
+////////// slider //////////
+
+var moving = false;
+var currentValue = 0;
+var targetValue = width;
+
+var playButton = d3.select("#play-button");
+    
+var x = d3.scaleTime()
+    .domain([startDate, endDate])
+    .range([0, targetValue])
+    .clamp(true);
+
+var slider = svg.append("g")
+    .attr("class", "slider")
+    .attr("transform", "translate(" + margin.left + "," + height/5 + ")");
+
+slider.append("line")
+    .attr("class", "track")
+    .attr("x1", x.range()[0])
+    .attr("x2", x.range()[1])
+  .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+    .attr("class", "track-inset")
+  .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+    .attr("class", "track-overlay")
+    .call(d3.drag()
+        .on("start.interrupt", function() { slider.interrupt(); })
+        .on("start drag", function() {
+          currentValue = d3.event.x;
+          update(x.invert(currentValue)); 
+        })
+    );
+
+slider.insert("g", ".track-overlay")
+    .attr("class", "ticks")
+    .attr("transform", "translate(0," + 18 + ")")
+  .selectAll("text")
+    .data(x.ticks(10))
+    .enter()
+    .append("text")
+    .attr("x", x)
+    .attr("y", 10)
+    .attr("text-anchor", "middle")
+    .text(function(d) { return formatDateIntoYear(d); });
+
+var handle = slider.insert("circle", ".track-overlay")
+    .attr("class", "handle")
+    .attr("r", 9);
+
+var label = slider.append("text")  
+    .attr("class", "label")
+    .attr("text-anchor", "middle")
+    .text(formatDate(startDate))
+    .attr("transform", "translate(0," + (-25) + ")")
+
+ 
+////////// plot //////////
+
+var dataset;
+
+var plot = svg.append("g")
+    .attr("class", "plot")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.csv("./data/circles.csv", prepare, function(data) {
+  dataset = data;
+  drawPlot(dataset);
+  
+  playButton
+    .on("click", function() {
+    var button = d3.select(this);
+    if (button.text() == "Pause") {
+      moving = false;
+      clearInterval(timer);
+      // timer = 0;
+      button.text("Play");
+    } else {
+      moving = true;
+      timer = setInterval(step, 100);
+      button.text("Pause");
+    }
+    console.log("Slider moving: " + moving);
+  })
+})
+
+function prepare(d) {
+  d.id = d.id;
+  d.date = parseDate(d.date);
+  return d;
+}
+  
+function step() {
+  update(x.invert(currentValue));
+  currentValue = currentValue + (targetValue/151);
+  if (currentValue > targetValue) {
+    moving = false;
+    currentValue = 0;
+    clearInterval(timer);
+    // timer = 0;
+    playButton.text("Play");
+    console.log("Slider moving: " + moving);
+  }
+}
+
+function drawPlot(data) {
+  var locations = plot.selectAll(".location")
+    .data(data);
+
+  // if filtered dataset has more circles than already existing, transition new ones in
+  locations.enter()
+    .append("circle")
+    .attr("class", "location")
+    .attr("cx", function(d) { return x(d.date); })
+    .attr("cy", height/2)
+    .style("fill", function(d) { return d3.hsl(d.date/1000000000, 0.8, 0.8)})
+    .style("stroke", function(d) { return d3.hsl(d.date/1000000000, 0.7, 0.7)})
+    .style("opacity", 0.5)
+    .attr("r", 8)
+      .transition()
+      .duration(400)
+      .attr("r", 25)
+        .transition()
+        .attr("r", 8);
+
+  // if filtered dataset has less circles than already existing, remove excess
+  locations.exit()
+    .remove();
+}
+
+function update(h) {
+  // update position and text of label according to slider scale
+  handle.attr("cx", x(h));
+  label
+    .attr("x", x(h))
+    .text(formatDate(h));
+
+  // filter data set and redraw plot
+  var newData = dataset.filter(function(d) {
+    return d.date < h;
+  })
+  drawPlot(newData);
+}
+
+</script>
+</body>
