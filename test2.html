@@ -35,14 +35,14 @@
   <link rel="stylesheet" href="./css/style.css" />
 
   <!-- Mi JavaScript -->
-  <script defer src="./js/script.js" delay></script>
+  <!-- <script defer src="./js/script.js" delay></script> -->
   
   <style>
-    body {
+    /* body {
       font-family:"avenir next", Arial, sans-serif;
       font-size: 12px;
       color: #696969;
-    }
+    } */
 
     #play-button {
       position: absolute;
@@ -118,7 +118,7 @@ var margin = {top:50, right:50, bottom:0, left:50},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-var svg = d3.select("#vis")
+var svg2 = d3.select("#vis")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom);  
@@ -136,7 +136,7 @@ var x = d3.scaleTime()
     .range([0, targetValue])
     .clamp(true);
 
-var slider = svg.append("g")
+var slider = svg2.append("g")
     .attr("class", "slider")
     .attr("transform", "translate(" + margin.left + "," + height/5 + ")");
 
@@ -149,11 +149,13 @@ slider.append("line")
   .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
     .attr("class", "track-overlay")
     .call(d3.drag()
-        .on("start.interrupt", function() { slider.interrupt(); })
-        .on("start drag", function() {
-          currentValue = d3.event.x;
-          update(x.invert(currentValue)); 
-        })
+      .on("start.interrupt", function() {
+        slider.interrupt(); 
+      })
+      .on("start drag", function() {
+        currentValue = d3.event.x;
+        update(x.invert(currentValue)); 
+      })
     );
 
 slider.insert("g", ".track-overlay")
@@ -183,7 +185,7 @@ var label = slider.append("text")
 
 var dataset;
 
-var plot = svg.append("g")
+var plot = svg2.append("g")
     .attr("class", "plot")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -193,19 +195,19 @@ d3.csv("./data/circles.csv", prepare, function(data) {
   
   playButton
     .on("click", function() {
-    var button = d3.select(this);
-    if (button.text() == "Pause") {
-      moving = false;
-      clearInterval(timer);
-      // timer = 0;
-      button.text("Play");
-    } else {
-      moving = true;
-      timer = setInterval(step, 100);
-      button.text("Pause");
-    }
-    console.log("Slider moving: " + moving);
-  })
+      var button = d3.select(this);
+      if (button.text() == "Pause") {
+        moving = false;
+        clearInterval(timer);
+        // timer = 0;
+        button.text("Play");
+      } else {
+        moving = true;
+        timer = setInterval(step, 100);
+        button.text("Pause");
+      }
+      console.log("Slider moving: " + moving);
+    })
 })
 
 function prepare(d) {
@@ -228,8 +230,7 @@ function step() {
 }
 
 function drawPlot(data) {
-  var locations = plot.selectAll(".location")
-    .data(data);
+  var locations = plot.selectAll(".location").data(data);
 
   // if filtered dataset has more circles than already existing, transition new ones in
   locations.enter()
